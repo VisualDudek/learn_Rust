@@ -26,3 +26,36 @@ result = "even" if x % 2 == 0 else "odd"
 ```python
 result = "A" if score >= 90 else "B" if score >= 80 else "F"
 ```
+
+---
+
+single vs. double quote:
+- `'x'` -> `char` and 
+- `"x"` -> `&str`
+
+---
+TIP: Read `std` reference:
+- [primitive type array](https://doc.rust-lang.org/stable/std/primitive.array.html)
+
+---
+How to not create a slice
+```Rust
+let a = [1, 2, 3, 4, 5];
+
+let b = a[1..4]; // !!! see comment below
+```
+this is effectively saying:
+- "I want to store this slice as a value"
+- but a slice is not a concrete owned value like `i32` or `String`
+- therefore this is not something Rust can place is a variable by itself
+
+By contrast
+```Rust
+let b = &[1..4];
+```
+means: 
+- take that slice
+- create a reference to it
+- store that reference in `b`
+
+---
