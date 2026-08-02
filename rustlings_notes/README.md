@@ -151,6 +151,7 @@ Explain the diff:
 - `fn foo(v : &Vec<i32>)` - takes a reference to the vector
 - `fn foo(v : &[i32])` - takes a slice of the vector, which is more general and idiomatic
 - `fn foo(mut v : Vec<i32>)` - takes ownership of the vector, and the caller can no longer use it after calling `foo`, but `foo` can modify the vector
+- `fn foo(mut v : &mut Vec<i32>)` - takes a mutable reference to the vector, and the caller can still use it after calling `foo`, but `foo` can modify the vector
 
 IMPORTANT: Rust treats function parameters as immutable by default, so if you want to modify the parameter, you need to use `mut` keyword.
 ```Rust
@@ -175,3 +176,100 @@ next move-semantics step: `mut vec: Vec<i32>` vs `vec: &mut Vec<i32>`
     - call by `foo(&mut vec)` instead of `foo(vec)`, The `&mut` at the call site means: “do not move ownership; instead, create a mutable reference and pass that reference into the function.”
     - the function do not need to return the vector, because the caller still owns it, and the function has modified it in place.
 
+---
+**cannot borrow var as mutable more than once at a time**
+```Rust
+let mut x = Vec::new();
+let y = &mut x; // first mutable borrow
+let z = &mut x; // second mutable borrow, this is not allowed
+```
+
+---
+Here is the compact table.
+
+| Function parameter | Meaning | Call syntax | Can function modify data? | Does caller keep ownership? |
+|---|---|---|---|---|
+| `v: Vec<i32>` | move ownership into function | `foo(vec)` | yes, if binding is `mut` | no |
+| `v: &Vec<i32>` | borrow immutably | `foo(&vec)` | no | yes |
+| `v: &[i32]` | borrow immutable slice | `foo(&vec)` or `foo(&array)` | no | yes |
+| `v: &mut Vec<i32>` | borrow mutably | `foo(&mut vec)` | yes | yes |
+| `mut v: Vec<i32>` | move ownership, mutable local binding | `foo(vec)` | yes | no |
+| `mut v: &mut Vec<i32>` | mutable reference binding | `foo(&mut vec)` | yes, but `mut` is usually unnecessary | yes |
+
+The most important distinction is this:
+
+- `mut v: Vec<i32>`:
+  - `mut` applies to the local variable binding
+  - the function owns the vector
+
+- `v: &mut Vec<i32>`:
+  - `&mut` is part of the type
+  - the function borrows the caller’s vector mutably
+
+Example set:
+
+```rust
+fn a(v: Vec<i32>) {
+    // owns v, but cannot push unless declared mut
+}
+
+fn b(mut v: Vec<i32>) {
+    v.push(4); // OK
+}
+
+fn c(v: &Vec<i32>) {
+    println!("{:?}", v); // read only
+}
+
+fn d(v: &[i32]) {
+    println!("{:?}", v); // read only, more idiomatic
+}
+
+fn e(v: &mut Vec<i32>) {
+    v.push(4); // OK
+}
+```
+
+Calls:
+
+```rust
+let mut vec = vec![1, 2, 3];
+let array = [1, 2, 3];
+
+a(vec);          // moves ownership
+b(vec![1, 2, 3]); // also moves ownership
+c(&vec);         // immutable borrow
+d(&vec);         // slice borrow from Vec
+d(&array);       // slice borrow from array
+e(&mut vec);     // mutable borrow
+```
+
+One subtle correction to your note in README.md: this form
+
+```rust
+fn foo(mut v: &mut Vec<i32>)
+```
+
+usually does not need `mut`. `v.push(4)` works fine with just:
+
+```rust
+fn foo(v: &mut Vec<i32>) {
+    v.push(4);
+}
+```
+
+because the vector data is mutable through the reference. Writing `mut v` only means you want to reassign the reference variable itself, for example:
+
+```rust
+fn foo(mut v: &mut Vec<i32>) {
+    v = &mut Vec::new(); // reassign binding
+}
+```
+
+That is rare.
+
+A cleaner version of that line in your notes would be:
+
+- `fn foo(v: &mut Vec<i32>)` - takes a mutable reference to the vector, caller keeps ownership, and `foo` can modify the vector in place
+
+If you want, I can also explain the `for i in v` vs `for i in &v` vs `for &i in &v` part from your notes, because that connects directly to moves and references.
