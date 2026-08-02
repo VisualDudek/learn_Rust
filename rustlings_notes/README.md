@@ -59,3 +59,119 @@ means:
 - store that reference in `b`
 
 ---
+tuple elements can be accessed by index, e.g. `tuple.0`, `tuple.1`, etc. BUT do not use this, because it is not readable. Instead, destructure the tuple into named variables, e.g. `let (x, y) = tuple;` or use structs with named fields.
+
+---
+Different ways of creating Vec
+
+```Rust
+let a = [1, 2, 3];
+
+let v = vec![1, 2, 3];
+
+let v = Vec::from(a);
+```
+
+---
+**TIP:** do not use `for` loop, use functional programming -> iterators
+
+iterator multiline syntax
+```Rust
+// input: &[i32]
+input
+    .iter()
+    .map(|element| {
+        *element * 2
+    })
+    .collect()
+```
+
+---
+- `println!()`
+- `print!()` - print without newline
+
+---
+`for` loop consume 
+
+```Rust
+let v = vec![1,2,3];
+
+for item in v {
+    println!("{}", item); 
+}
+// does v still exist ?
+println!("{:?}", v);  // NO
+```
+
+By contrast
+```Rust
+let v = vec![1,2,3];
+
+for item in &v {
+    //     ^^^ by reference
+    println!("{}", item); 
+}
+// does v still exist ?
+println!("{:?}", v);  // YES
+```
+
+Explain diff:
+- `for i in v {}`
+- `for i in &v {}`
+- `for &i in v {}`
+
+---
+**Idiomatic Rust**: `&Vec<T>` Rust applies a coercion to `&[T]` automatically, so you can use `&Vec<T>` as a slice. But it is more idiomatic to use `&[T]` directly.
+
+**It is the idiomatic Rust API style: take the least specific type that still does the job.**
+
+for example, with `&[i32]` all of these can works:
+```Rust
+foo(&vec);
+foo(&array);
+foo(&slice);
+
+// BUT in contrast:
+fn bar(vec: &Vec<i32>) {
+    // ...
+}
+// only works with Vec, not array or slice
+```
+
+Takeaway: instead of `&Vec<T>`, use `&[T]` in function signatures.
+
+---
+`Vec<T>` and `String` are owned types, and they are heap allocated. Their borrowed "views" are slices:
+- `&[T]` for `Vec<T>`
+- `&str` for `String`
+
+---
+Explain the diff:
+- `fn foo(v : Vec<i32>)` - takes ownership of the vector, and the caller can no longer use it after calling `foo`
+- `fn foo(v : &Vec<i32>)` - takes a reference to the vector
+- `fn foo(v : &[i32])` - takes a slice of the vector, which is more general and idiomatic
+- `fn foo(mut v : Vec<i32>)` - takes ownership of the vector, and the caller can no longer use it after calling `foo`, but `foo` can modify the vector
+
+IMPORTANT: Rust treats function parameters as immutable by default, so if you want to modify the parameter, you need to use `mut` keyword.
+```Rust
+fn foo(mut v : Vec<i32>) {
+    // v is moved into foo, and foo can modify it
+    v.push(4);
+} // v is dropped here, and the memory is freed
+```
+**`mut` does not make the caller's variable mutable**
+
+---
+next move-semantics step: `mut vec: Vec<i32>` vs `vec: &mut Vec<i32>`
+- `fn foo(mut vec: Vec<i32>) -> Vec<i32> {}`
+    - ownership moves into the function
+    - the function may modify it because the local binding is mutable
+    - the caller loses access unless the value is returned
+
+- `fn foo(vec: &mut Vec<i32>) {}`
+    - ownership stays with the caller
+    - the function may modify it through a mutable reference
+    - the caller gets the same vector back automatically after the borrow ends
+    - call by `foo(&mut vec)` instead of `foo(vec)`, The `&mut` at the call site means: “do not move ownership; instead, create a mutable reference and pass that reference into the function.”
+    - the function do not need to return the vector, because the caller still owns it, and the function has modified it in place.
+
