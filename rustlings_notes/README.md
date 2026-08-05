@@ -348,3 +348,27 @@ y.push(42);       // last use of y — borrow ends here
 **Why it matters:** Before NLL (pre-2018), borrows lasted until the end of the enclosing scope, which caused many false-positive borrow-checker errors. NLL lets the checker reason about actual usage instead.
 
 ---
+**What is unit struct?**
+
+You use it when you care about the type for its behavior (implementing traits, acting as a marker, or providing methods) but don't need to store any data.
+
+---
+**Struct update syntax**
+```rust
+let order_template = create_order_template();
+
+let order = Order {
+    name: "Custom".to_string(),
+    ..order_template  // no comma
+};
+```
+
+---
+**Enum syntax**
+```rust
+enum IpAddrKind {
+    V4,
+    V6,
+} 
+
+```
