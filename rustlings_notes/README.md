@@ -1,6 +1,10 @@
 # Rustlings notes
 
-- variables shadowing
+Postmortem notes from Rustlings exercises.
+- [Post One: Ownership and Borrowing](.post_one_ownership_and_borrowing.md)
+
+---
+variables shadowing
 ```Rust
 
     let number = "T-H-R-E-E"; 
@@ -60,6 +64,16 @@ means:
 
 ---
 tuple elements can be accessed by index, e.g. `tuple.0`, `tuple.1`, etc. BUT do not use this, because it is not readable. Instead, destructure the tuple into named variables, e.g. `let (x, y) = tuple;` or use structs with named fields.
+
+Followup: does above destructuring move ownership of the tuple elements? 
+
+Yes, if the tuple elements are not `Copy`, then destructuring will move ownership of the elements into the new variables. If the elements are `Copy`, then they will be copied instead of moved.
+
+If you do not want to move ownership, you can destructure by reference, e.g. 
+```Rust
+let (x, y) = &tuple; // x and y are references to the tuple elements, ownership is not moved
+let (ref x, ref y) = tuple; // older style; x and y are references to the tuple elements, ownership is not moved
+```
 
 ---
 Different ways of creating Vec
@@ -273,3 +287,33 @@ A cleaner version of that line in your notes would be:
 - `fn foo(v: &mut Vec<i32>)` - takes a mutable reference to the vector, caller keeps ownership, and `foo` can modify the vector in place
 
 If you want, I can also explain the `for i in v` vs `for i in &v` vs `for &i in &v` part from your notes, because that connects directly to moves and references.
+
+---
+diagnostic methods for detecting Copy trait implementation:
+```Rust
+fn assert_copy<T: Copy>() {}
+
+fn check() {
+    assert_copy::<i32>(); // i32 implements Copy
+    assert_copy::<String>(); // String does not implement Copy, this will fail to compile
+    assert_copy::<Vec<i32>>(); // Vec does not implement Copy, this will fail to compile
+    assert_copy::<&str>(); // &str implements Copy
+    assert_copy::<YourType>(); // we will see
+}
+```
+
+---
+Explain difference between:
+- `for i in &items`
+- `for ref i in items`
+
+they end up giving you the same binding type (`i: &T`), but the ownership semantics are different.
+What's actually happening:
+
+- `for i in &item` — calls `IntoIterator` on `&Vec<T>`, which yields `&T` directly. `item` itself is only borrowed for the duration of the loop; nothing is moved, nothing is dropped early. Fully idiomatic.
+- `for ref i in item` — calls `IntoIterator` on `Vec<T>` by value, which moves `item` and yields owned `T` on each iteration. The `ref i` pattern then just takes a reference to that owned temporary instead of binding it directly. So each element is technically moved out of the vec into a temporary, borrowed for the loop body, then that temporary (and the underlying vec storage) is dropped as the loop progresses. `item` as a whole is consumed and unusable afterward.
+
+In practice, `for ref i in item` is almost never written — if you want to consume the collection and own each element, you'd just write `for i in item` (no `ref`, `i: T`). The ref pattern here is mostly a teaching example of how binding modes work, not something idiomatic Rust code does.
+
+---
+
