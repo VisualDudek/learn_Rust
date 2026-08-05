@@ -86,6 +86,13 @@ let v = vec![1, 2, 3];
 let v = Vec::from(a);
 ```
 
+By contrast:
+```Rust
+let a = [1, 2, 3, 4];
+
+let v = vec![a]; // v contains SINGLE element a, so v ends up as Vec<[i32; 4]> with length 1, not a vex of four elements.
+```
+
 ---
 **TIP:** do not use `for` loop, use functional programming -> iterators
 
@@ -316,4 +323,28 @@ What's actually happening:
 In practice, `for ref i in item` is almost never written — if you want to consume the collection and own each element, you'd just write `for i in item` (no `ref`, `i: T`). The ref pattern here is mostly a teaching example of how binding modes work, not something idiomatic Rust code does.
 
 ---
+Memo: Non-Lexical Lifetimes (NLL) in Rust
 
+**Topic:** How mutable borrows end in modern Rust
+
+**Key idea:** Rust doesn't tie borrow lifetimes to lexical scope (i.e., the enclosing `{}` block). Instead, a borrow ends at its **last point of use** — not at the end of the block it was created in.
+
+**Example:**
+```rust
+let mut x = vec![1, 2, 3];
+let y = &mut x;   // mutable borrow starts
+y.push(42);       // last use of y — borrow ends here
+// x can be freely used/borrowed again from this point on
+```
+
+**Mechanics:**
+- `let y = &mut x;` creates a mutable borrow
+- `y.push(42);` is the last use of `y`
+- The compiler sees no further use of `y` after that line, so it ends the borrow immediately — no explicit `drop(y)` needed
+- This is called **NLL (Non-Lexical Lifetimes)**, introduced in Rust 2018
+
+**Counter-case:** If `y` is used again later, the borrow extends until that later use — it doesn't end early just because a "logical" point passed.
+
+**Why it matters:** Before NLL (pre-2018), borrows lasted until the end of the enclosing scope, which caused many false-positive borrow-checker errors. NLL lets the checker reason about actual usage instead.
+
+---
