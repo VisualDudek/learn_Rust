@@ -1,7 +1,7 @@
 # Rustlings notes
 
 Postmortem notes from Rustlings exercises.
-- [Post One: Ownership and Borrowing](.post_one_ownership_and_borrowing.md)
+- [Ownership and Borrowing](./post_two_approach_to_mut_vec.md)
 
 ---
 variables shadowing
