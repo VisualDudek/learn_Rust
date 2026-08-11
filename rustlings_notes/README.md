@@ -372,3 +372,35 @@ enum IpAddrKind {
 } 
 
 ```
+
+---
+HashMap
+
+1. How to create a HashMap
+2. `.insert()` method to add key-value pairs, instead of `.push()` like Vec
+3. `.get()` method to retrieve values by key, returns `Option<&V>`
+4. iterates over key-value pairs with `for (key, value) in &hashmap` by borrow, so you can still use the hashmap afterward
+5. overwriting values with the same key replaces the old value, just `.insert()` again
+6. add (k,v) only if key does not exist: `.entry(key).or_insert(value)`. **`.entry()`** returns an `Entry` enum, which has methods like `.or_insert()`, `.or_insert_with()`, `.and_modify()`, etc. to manipulate the value for that key.
+ - `entry().and_modify().or_insert()` looks interesting (rustlings exercise hashmap3.rs)
+7. update value `.entry(key).or_insert(value)` returns a mutable reference to the value, so you can modify it in place BUT you need to dereference it first, e.g. `*scores.entry(team_name).or_insert(0) += points;` OR `let score = scores.entry(team_name).or_insert(0); *score += points;`
+
+
+Why `.copy()` in `let score = scores.get(&team_name).copied().unwrap_or(0);` ?
+1. **Lifetime**: `.get()` returns `Option<&V>`, a reference to the value. If you want to own the value (e.g., an integer), you need to copy it out of the reference.
+2. **`.unwrap_or(0)` need matching types: `copied()` converts `Option<&i32>` to `Option<i32>`, so that `unwrap_or(0)` can return an `i32` instead of a reference.
+
+
+If you iterate over `scores` you will consume it (which calls the `.into_iter()` method), so you cannot use it afterward. If you iterate over `&scores`, you borrow it and can still use it afterward.
+```rust
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+for (key, value) in &scores {
+    println!("{key}: {value}");
+}
+```
