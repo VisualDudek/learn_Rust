@@ -386,6 +386,19 @@ HashMap
 7. update value `.entry(key).or_insert(value)` returns a mutable reference to the value, so you can modify it in place BUT you need to dereference it first, e.g. `*scores.entry(team_name).or_insert(0) += points;` OR `let score = scores.entry(team_name).or_insert(0); *score += points;`
 
 
+The anti-pattern to avoid is doing this manually:
+
+```rust
+// don't do this — two lookups, and awkward borrow-checker dance
+if !scores.contains_key(&key) {
+    scores.insert(key.clone(), 0);
+}
+*scores.get_mut(&key).unwrap() += 10;
+```
+
+when entry() does it in one shot and sidesteps the borrow issues entirely.
+
+
 Why `.copy()` in `let score = scores.get(&team_name).copied().unwrap_or(0);` ?
 1. **Lifetime**: `.get()` returns `Option<&V>`, a reference to the value. If you want to own the value (e.g., an integer), you need to copy it out of the reference.
 2. **`.unwrap_or(0)` need matching types: `copied()` converts `Option<&i32>` to `Option<i32>`, so that `unwrap_or(0)` can return an `i32` instead of a reference.
