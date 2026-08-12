@@ -27,6 +27,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    use rstest::rstest;
     use super::Solution;
 
     fn assert_two_sum_any_order(nums: Vec<i32>, target: i32, expected: [i32; 2]) {
@@ -52,5 +53,20 @@ mod tests {
     #[test]
     fn returns_default_when_no_match_exists() {
         assert_eq!(Solution::two_sum(vec![1, 2, 3], 10), vec![0, 0]);
+    }
+
+    // Additional test cases using rstest for parameterized testing
+
+    #[rstest]
+    #[case(vec![2, 7, 11, 15], 9, [0, 1])]
+    #[case(vec![3, 3], 6, [0, 1])]
+    #[case(vec![1, 2, 3], 10, [0, 0])]
+    #[case(vec![5, 75, 25], 100, [1, 2])]
+    fn returns_valid_two_sum_cases(
+        #[case] nums: Vec<i32>,
+        #[case] target: i32,
+        #[case] expected: [i32; 2],
+    ) {
+        assert_two_sum_any_order(nums, target, expected);
     }
 }
