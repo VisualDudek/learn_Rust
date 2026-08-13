@@ -401,7 +401,7 @@ when entry() does it in one shot and sidesteps the borrow issues entirely.
 
 Why `.copy()` in `let score = scores.get(&team_name).copied().unwrap_or(0);` ?
 1. **Lifetime**: `.get()` returns `Option<&V>`, a reference to the value. If you want to own the value (e.g., an integer), you need to copy it out of the reference.
-2. **`.unwrap_or(0)` need matching types: `copied()` converts `Option<&i32>` to `Option<i32>`, so that `unwrap_or(0)` can return an `i32` instead of a reference.
+2. **`.unwrap_or(0)`** need matching types: `copied()` converts `Option<&i32>` to `Option<i32>`, so that `unwrap_or(0)` can return an `i32` instead of a reference.
 
 
 If you iterate over `scores` you will consume it (which calls the `.into_iter()` method), so you cannot use it afterward. If you iterate over `&scores`, you borrow it and can still use it afterward.
