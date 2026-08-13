@@ -417,3 +417,12 @@ for (key, value) in &scores {
     println!("{key}: {value}");
 }
 ```
+
+---
+`for x in v` desugars to `for x in v.into_iter()` — not `.iter()`. So plain `for x in some_vec` always consumes the vec. If you meant to borrow, you need `for x in &v` or `for x in v.iter()`.
+
+
+`for x in &v` desugars to `for x in (&v).into_iter()`, which is equivalent to `for x in v.iter()`. This is the idiomatic way to iterate over a collection without consuming it.
+
+`for x in v.iter()` clearer when chaining e.g. `v.iter().enumerate().map(...)` but otherwise `for x in &v` is more concise.
+---
