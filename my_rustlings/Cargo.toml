@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "002_vec", "solutions/002_vec",
+]
+resolver = "2"
