@@ -19,6 +19,16 @@ pub fn first_word(s: &str) -> &str {
     }
 }
 
+// Custom solution
+pub fn first_word(s: &str) -> &str {
+    for (i, item) in s.char_indices() {
+        if item == ' ' {
+            return &s[0..i];
+        }
+    }
+    s
+}
+
 // ---------------------------------------------------------------------
 // 2. Iterating by `char`, not by byte
 // ---------------------------------------------------------------------
@@ -29,6 +39,19 @@ pub fn count_vowels(s: &str) -> usize {
     s.chars()
         .filter(|c| matches!(c.to_ascii_lowercase(), 'a' | 'e' | 'i' | 'o' | 'u'))
         .count()
+}
+
+// Custom solution
+pub fn count_vowels(s: &str) -> usize {
+    // todo!()
+    let mut counter: usize = 0;
+    for c in s.chars() {
+        match c.to_ascii_lowercase() {
+            'a' | 'e' | 'i' | 'o' | 'u' => counter += 1,
+            _ => {},
+        }
+    } 
+    counter
 }
 
 // ---------------------------------------------------------------------
