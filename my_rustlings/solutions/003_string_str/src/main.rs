@@ -105,6 +105,28 @@ pub fn longest_word<'a>(s: &'a str) -> &'a str {
         })
 }
 
+// NOTATKI: Czy moge opuścić lifetime w sygnaturze funkcji? 
+/*
+Yes, you can drop it completely.
+
+Why
+
+Lifetime elision isn't a relaxation of Rust's borrow-checking rules — it's a syntactic shortcut. The compiler still computes and enforces a lifetime relationship between s and the return value; it just doesn't require you to spell it out when the answer is unambiguous from the shape of the signature alone.
+
+Your signature `fn longest_word(s: &str) -> &str` has exactly one reference parameter. That's the trigger for elision rule 2:
+
+If there is exactly one input lifetime (elided or not), that lifetime is assigned to all elided output lifetimes.
+
+There's only one possible reference the output could be borrowing from — s — so there's nothing for the compiler to guess between. It mechanically rewrites your signature internally to:
+
+```rust
+pub fn longest_word<'a>(s: &'a str) -> &'a str
+```
+
+behind the scenes, whether you write the 'a or not. Writing it explicitly and letting elision fill it in produce the exact same compiled function signature — same borrow-checking, same guarantees, same everything. It's not a weaker or different check; it's identical, just written with less noise.
+
+*/
+
 // ---------------------------------------------------------------------
 // 6. UTF-8 boundaries and panics
 // ---------------------------------------------------------------------
