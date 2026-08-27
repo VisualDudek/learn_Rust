@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "string004"
+version = "0.1.0"
+
+[[package]]
 name = "string_str003"
 version = "0.1.0"
 

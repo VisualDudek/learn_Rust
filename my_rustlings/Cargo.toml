@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "002_vec", "003_string_str", "solutions/002_vec", "solutions/003_string_str",
+    "002_vec", "003_string_str", "004_compose_string", "solutions/002_vec", "solutions/003_string_str",
 ]
 resolver = "2"
