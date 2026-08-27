@@ -23,17 +23,22 @@ fn compose_me(input: &str) -> String {
     // zakręcone ale działa 
 
     // 7.
-    let a = String::from(input);
-    let b = String::from(" world!");
-    let c = a + &b; // a is moved here and can no longer be used
+    // let a = String::from(input);
+    // let b = String::from(" world!");
+    // let c = a + &b; // a is moved here and can no longer be used
     // left side of + is being consumed, right side is borrowed
     // dowodem jest Add Trait implementation
     // fn add(self, rhs: &str) -> String;
     //        ^^^^ consumes self, so a is moved and can no longer be used
 
     //println!("{a}");  // ERROR: a is moved here and can no longer be used
+    // c
 
-    c
+    // 8.
+    let mut s = String::from(input);
+    s.push_str(" world!");
+    s
+
 
 }
 
