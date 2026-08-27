@@ -47,6 +47,13 @@ Good instinct to question this, because it looks inconsistent at first. The diff
 
 &Vec<T> -> Vec<T>, by contrast, involves no type change at all — you strip a reference and get literally the same type back. Same job as Clone, every time, no exceptions.
      */
+
+    // 2. v.clone()  // <-- this is the same as v.to_vec() ??? i tak i nie SEE: Obsidian/journal#FAQ
+
+    // 3. v.clone() <-- jak tutaj działa autoderef?
+    /*
+Vec<T>: Clone is defined directly on Vec<T> itself (impl<T: Clone> Clone for Vec<T>), and .clone() is a method call — so ordinary autoref/autoderef kicks in: v: &Vec<i32>, the compiler tries (*v).clone() (i.e., Vec<i32>::clone), finds it, done. No trait-impl-matching-on-the-argument-type is involved at all; the receiver-lookup mechanism (method resolution) is doing the deref work, not From. 
+     */
 }
 
 // brakuje mut in-place przez ref
