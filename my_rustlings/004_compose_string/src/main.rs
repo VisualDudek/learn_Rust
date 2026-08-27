@@ -19,8 +19,21 @@ fn compose_me(input: &str) -> String {
     // ^^^ Why not String + String? -> See: Obsidian/journal
 
     // 6.
+    // input.to_string() + &String::from(" world!")
     // zakręcone ale działa 
-    input.to_string() + &String::from(" world!")
+
+    // 7.
+    let a = String::from(input);
+    let b = String::from(" world!");
+    let c = a + &b; // a is moved here and can no longer be used
+    // left side of + is being consumed, right side is borrowed
+    // dowodem jest Add Trait implementation
+    // fn add(self, rhs: &str) -> String;
+    //        ^^^^ consumes self, so a is moved and can no longer be used
+
+    //println!("{a}");  // ERROR: a is moved here and can no longer be used
+
+    c
 
 }
 
