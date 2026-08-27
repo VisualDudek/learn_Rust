@@ -17,12 +17,16 @@ fn fill_vec_better(vec: Vec<i32>) -> Vec<i32> {
 }
 
 fn vec_from_slice(arr: &[i32]) -> Vec<i32> {
-    Vec::from(arr)
+    todo!()
 }
 
 fn vec_form_vec_ref(v: &Vec<i32>) -> Vec<i32> {
-    // Vec::from(v)
-    v.to_vec()
+    todo!()
+}
+
+// mut in-place
+fn vec_mut_inplace() {
+    v.push(88);
 }
 
 fn main() {
@@ -45,5 +49,26 @@ mod tests {
         let vec0 = vec![22, 44, 66];
         let vec1 = fill_vec_better(vec0);
         assert_eq!(vec1, vec![22, 44, 66, 88]);
+    }
+
+    #[test]
+    fn test_vec_from_slice() {
+        let vec0 = vec![22, 44, 66];
+        let vec1 = vec_from_slice(&vec0);
+        assert_eq!(vec1, vec![22, 44, 66]);
+    }
+
+    #[test]
+    fn test_vec_from_vec_ref() {
+        let vec0 = vec![22, 44, 66];
+        let vec1 = vec_form_vec_ref(&vec0);
+        assert_eq!(vec1, vec![22, 44, 66]);
+    }
+
+    #[test]
+    fn test_vec_mut_inplace() {
+        let mut vec0 = vec![22, 44, 66];
+        vec_mut_inplace(&mut vec0);
+        assert_eq!(vec0, vec![22, 44, 66, 88]);
     }
 }
