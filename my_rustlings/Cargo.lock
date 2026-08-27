@@ -21,3 +21,11 @@ version = "0.1.0"
 [[package]]
 name = "vec002sol"
 version = "0.1.0"
+
+[[package]]
+name = "vecbgn005"
+version = "0.1.0"
+
+[[package]]
+name = "vecbgn005sol"
+version = "0.1.0"
