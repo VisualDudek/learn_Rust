@@ -48,6 +48,27 @@ pub fn capitalize_first(s: &str) -> String {
     }
 }
 
+// NOTATKI: Dlaczego wewnątrz funkcji możemy zbudować String i nie jest on 
+//dealokowany po wyściu z funkcji
+/*
+1. String jest alokowany na stercie (heap), a nie na stosie (stack). 
+Kiedy tworzysz String wewnątrz funkcji, jego dane są przechowywane w pamięci 
+sterty, która jest zarządzana dynamicznie.
+2.
+Why it's not dropped — this is the important part
+
+This is not about heap vs. stack. It's about ownership.
+
+Drop::drop runs when a value's owner goes out of scope and that value hasn't been moved away. In your function:
+
+rust
+first.to_uppercase().collect::<String>() + chars.as_str()
+
+This whole expression is the tail expression of the match, which is the tail expression of the function body (no semicolon). In Rust, a tail expression's value becomes the function's return value — ownership of that String is moved out to the caller as part of the return. There's no local variable binding still "owning" it when the function frame is torn down, so there's nothing left for Drop to run on.
+
+*/
+
+
 // ---------------------------------------------------------------------
 // 4. Two-pointer / iterator reasoning over `char`s
 // ---------------------------------------------------------------------
