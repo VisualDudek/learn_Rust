@@ -272,14 +272,14 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_ex1_create_and_push() {
+    fn test_ex01_create_and_push() {
         let result = ex1_create_and_push();
         // Checks that all five elements were pushed, in order.
         assert_eq!(result, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
-    fn test_ex2_with_capacity() {
+    fn test_ex02_with_capacity() {
         let result = ex2_with_capacity();
         // Capacity should be reserved, but length must still be zero —
         // capacity and length are independent properties.
@@ -288,7 +288,7 @@ mod tests {
     }
 
     #[test]
-    fn test_ex3_pop_last() {
+    fn test_ex03_pop_last() {
         let mut numbers = vec![10, 20, 30];
         let popped = ex3_pop_last(&mut numbers);
         // The last element should be returned...
@@ -298,14 +298,14 @@ mod tests {
     }
 
     #[test]
-    fn test_ex3_pop_last_empty() {
+    fn test_ex03_pop_last_empty() {
         let mut empty: Vec<i32> = Vec::new();
         // Popping an empty vector must return None, not panic.
         assert_eq!(ex3_pop_last(&mut empty), None);
     }
 
     #[test]
-    fn test_ex4_safe_get() {
+    fn test_ex04_safe_get() {
         let numbers = vec![1, 2, 3];
         // In-bounds index returns Some(value).
         assert_eq!(ex4_safe_get(&numbers, 1), Some(2));
@@ -314,7 +314,7 @@ mod tests {
     }
 
     #[test]
-    fn test_ex5_sum_all() {
+    fn test_ex05_sum_all() {
         let numbers = vec![1, 2, 3, 4];
         // 1 + 2 + 3 + 4 = 10.
         assert_eq!(ex5_sum_all(&numbers), 10);
@@ -323,7 +323,7 @@ mod tests {
     }
 
     #[test]
-    fn test_ex6_double_all() {
+    fn test_ex06_double_all() {
         let numbers = vec![1, 2, 3];
         // Every element should be doubled, in the original order.
         assert_eq!(ex6_double_all(&numbers), vec![2, 4, 6]);
@@ -332,21 +332,21 @@ mod tests {
     }
 
     #[test]
-    fn test_ex7_middle_slice() {
+    fn test_ex07_middle_slice() {
         let numbers = vec![1, 2, 3, 4, 5];
         // First and last elements should be excluded.
         assert_eq!(ex7_middle_slice(&numbers), &[2, 3, 4]);
     }
 
     #[test]
-    fn test_ex8_build_string_vec() {
+    fn test_ex08_build_string_vec() {
         let words = ex8_build_string_vec();
         // Checks contents and order of the owned String vector.
         assert_eq!(words, vec!["rust".to_string(), "is".to_string(), "fun".to_string()]);
     }
 
     #[test]
-    fn test_ex9_filter_high_scorers() {
+    fn test_ex09_filter_high_scorers() {
         let players = vec![
             Player { name: "Ada".to_string(), score: 90 },
             Player { name: "Grace".to_string(), score: 40 },
