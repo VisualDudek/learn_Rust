@@ -169,6 +169,16 @@ fn ex6_double_all(numbers: &[i32]) -> Vec<i32> {
     // from the function's declared return type — nothing in the original
     // slice is touched.
     numbers.iter().map(|n| n * 2).collect()
+
+    // See Mul impl for &i32:
+    /*
+impl Mul<i32> for &i32 {
+    type Output = i32;  // <-- HERE
+    fn mul(self, rhs: i32) -> i32 {
+        *self * rhs   // the deref happens *inside* this impl
+    }
+}
+    */
 }
 
 // ===========================================================================
