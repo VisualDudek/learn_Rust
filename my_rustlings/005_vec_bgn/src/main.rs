@@ -150,6 +150,7 @@ fn ex5_sum_all(numbers: &[i32]) -> i32 {
 fn ex6_double_all(numbers: &[i32]) -> Vec<i32> {
     // TODO: use numbers.iter().map(...).collect() to build the result.
     Vec::new()
+    // TODO: there the conversion from &i32 to i32 happens?
 }
 
 // ===========================================================================
