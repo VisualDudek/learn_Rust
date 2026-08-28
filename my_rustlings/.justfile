@@ -6,4 +6,8 @@ default:
 [no-cd]
 @w:
     @cargo watch -c -x "test -- --nocapture"
+
+# Explain a Rust compiler error by number
+e code:
+    @rustc --explain E{{code}}
     
