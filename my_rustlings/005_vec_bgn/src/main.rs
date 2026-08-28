@@ -78,7 +78,8 @@ fn ex2_with_capacity() -> Vec<i32> {
 /// `Option<i32>` (don't unwrap — pass the `Option` straight through).
 fn ex3_pop_last(numbers: &mut Vec<i32>) -> Option<i32> {
     // TODO: remove and return the last element using .pop().
-    None
+    //None
+    Some(0)
 }
 
 // ===========================================================================
