@@ -11,7 +11,12 @@ use `test_exercise_xx` double digits e.g. `test_exercise_01`, `test_exercise_02`
 In `.vscode/settings.json` add the following line to disable auto-completions from GitHub Copilot:
 ```json
 {
-  "github.copilot.editor.enableAutoCompletions": false
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
 }
 ```
 
