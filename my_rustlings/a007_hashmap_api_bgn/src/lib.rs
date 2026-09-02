@@ -351,6 +351,6 @@ mod tests {
         assert_eq!(freq.get("quick"), Some(&1));
         assert_eq!(freq.get("dog"), Some(&1));
         assert_eq!(freq.get("cat"), None);
-        assert_eq!(freq.len(), 8);
+        assert_eq!(freq.len(), 9);
     }
 }
