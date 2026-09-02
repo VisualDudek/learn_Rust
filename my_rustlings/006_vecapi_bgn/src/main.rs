@@ -1,3 +1,4 @@
+#![allow(unused_variables, dead_code, unused_mut)]
 // ============================================================================
 // Vec<T> Exercises — 10 hands-on drills for mastering Rust's growable array.
 //
@@ -232,6 +233,11 @@ fn exercise_10_matrix_row_sums(matrix: &Vec<Vec<i32>>) -> Vec<i32> {
     todo!()
 }
 // Takeaway: Vec<Vec<T>> models a 2D grid as rows of independent Vecs — iterate the outer Vec and reduce each inner Vec with standard Iterator methods.
+
+fn main() {
+    // Just to silence the unused warnings — you can optionally experiment here.
+}
+
 
 // ============================================================================
 // Tests — run `cargo test` to check your implementations.
