@@ -1,4 +1,6 @@
 
+## Test names
+use `test_exercise_xx` double digits e.g. `test_exercise_01`, `test_exercise_02`, etc. to avoid running `test_exercise_10` first.
 
 ## Solution to problems with `rust-analyzer`
 
