@@ -1,4 +1,8 @@
 
+## Create new topic-dir 
+`cargo new <exer/e001_amstrong> --lib --vcs none` to create a new topic directory with a library crate and no version control system.
+
+
 ## Test names
 use `test_exercise_xx` double digits e.g. `test_exercise_01`, `test_exercise_02`, etc. to avoid running `test_exercise_10` first.
 
