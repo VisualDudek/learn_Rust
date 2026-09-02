@@ -3,6 +3,14 @@
 version = 4
 
 [[package]]
+name = "a007_hashmap_api_bgn"
+version = "0.1.0"
+
+[[package]]
+name = "a007_hashmap_api_bgn_sol"
+version = "0.1.0"
+
+[[package]]
 name = "string004"
 version = "0.1.0"
 

@@ -1,0 +1,6 @@
+[package]
+name = "a007_hashmap_api_bgn_sol"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
