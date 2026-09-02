@@ -241,21 +241,21 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_exercise_1_build_and_shrink() {
+    fn test_exercise_01_build_and_shrink() {
         // Push 1..=5 -> [1,2,3,4,5], then pop -> [1,2,3,4]
         assert_eq!(exercise_1_build_and_shrink(5), vec![1, 2, 3, 4]);
         assert_eq!(exercise_1_build_and_shrink(1), vec![]);
     }
 
     #[test]
-    fn test_exercise_2_contains_and_index() {
+    fn test_exercise_02_contains_and_index() {
         let v = vec![10, 20, 30, 40];
         assert_eq!(exercise_2_contains_and_index(&v, 30), (true, Some(2)));
         assert_eq!(exercise_2_contains_and_index(&v, 99), (false, None));
     }
 
     #[test]
-    fn test_exercise_3_insert_and_remove() {
+    fn test_exercise_03_insert_and_remove() {
         let mut v = vec![1, 2, 3];
         // Insert 99 at index 1 -> [1, 99, 2, 3]; remove index 3 (the `3`) -> returns 3
         let removed = exercise_3_insert_and_remove(&mut v, 1, 99, 3);
@@ -264,28 +264,28 @@ mod tests {
     }
 
     #[test]
-    fn test_exercise_4_sort_ascending() {
+    fn test_exercise_04_sort_ascending() {
         let mut v = vec![5, 3, 1, 4, 2];
         exercise_4_sort_ascending(&mut v);
         assert_eq!(v, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
-    fn test_exercise_5_dedup_consecutive() {
+    fn test_exercise_05_dedup_consecutive() {
         let mut v = vec![3, 1, 2, 1, 3, 2];
         exercise_5_dedup_consecutive(&mut v);
         assert_eq!(v, vec![1, 2, 3]);
     }
 
     #[test]
-    fn test_exercise_6_retain_even() {
+    fn test_exercise_06_retain_even() {
         let mut v = vec![1, 2, 3, 4, 5, 6];
         exercise_6_retain_even(&mut v);
         assert_eq!(v, vec![2, 4, 6]);
     }
 
     #[test]
-    fn test_exercise_7_drain_range() {
+    fn test_exercise_07_drain_range() {
         let mut v = vec![10, 20, 30, 40, 50];
         let drained = exercise_7_drain_range(&mut v, 1, 3);
         assert_eq!(drained, vec![20, 30]);
@@ -293,14 +293,14 @@ mod tests {
     }
 
     #[test]
-    fn test_exercise_8_extend_and_truncate() {
+    fn test_exercise_08_extend_and_truncate() {
         let mut v = vec![1, 2, 3];
         exercise_8_extend_and_truncate(&mut v, &[4, 5, 6, 7], 5);
         assert_eq!(v, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
-    fn test_exercise_9_swap_and_window_sums() {
+    fn test_exercise_09_swap_and_window_sums() {
         let mut v = vec![1, 2, 3, 4];
         // swap(0, 3) -> [4, 2, 3, 1]; window sums -> [6, 5, 4]
         let sums = exercise_9_swap_and_window_sums(&mut v, 0, 3);
