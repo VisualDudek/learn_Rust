@@ -7,6 +7,14 @@
 ## Test names
 use `test_exercise_xx` double digits e.g. `test_exercise_01`, `test_exercise_02`, etc. to avoid running `test_exercise_10` first.
 
+## Disable Copilot auto-completions
+In `.vscode/settings.json` add the following line to disable auto-completions from GitHub Copilot:
+```json
+{
+  "github.copilot.editor.enableAutoCompletions": false
+}
+```
+
 ## Solution to problems with `rust-analyzer`
 
 `cargo init` does not have a built-in flag (like `--workspace`) to initialize a Cargo workspace directly. It only initializes individual packages (`--bin` or `--lib`).
