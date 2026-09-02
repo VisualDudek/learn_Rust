@@ -2,6 +2,7 @@
 ## Create new topic-dir 
 `cargo new <exer/e001_amstrong> --lib --vcs none` to create a new topic directory with a library crate and no version control system.
 
+**BUT** for solutions use `--name` to alter the package name to avoid conflicts with the exercise crate name. For example, `cargo new --lib --vcs none --name <NAME>_sol` to create a solution crate for the `<NAME>` exercise.
 
 ## Test names
 use `test_exercise_xx` double digits e.g. `test_exercise_01`, `test_exercise_02`, etc. to avoid running `test_exercise_10` first.
