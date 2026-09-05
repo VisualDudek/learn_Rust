@@ -38,35 +38,35 @@ mod tests {
     use super::*;
 
     #[test]
-    fn move_semantics1() {
+    fn t001_move_semantics1() {
         let vec0 = vec![22, 44, 66];
         let vec1 = fill_vec(vec0);
         assert_eq!(vec1, vec![22, 44, 66, 88]);
     }
 
     #[test]
-    fn move_semantics2() {
+    fn t002_move_semantics2() {
         let vec0 = vec![22, 44, 66];
         let vec1 = fill_vec_better(vec0);
         assert_eq!(vec1, vec![22, 44, 66, 88]);
     }
 
     #[test]
-    fn test_vec_from_slice() {
+    fn t003_test_vec_from_slice() {
         let vec0 = vec![22, 44, 66];
         let vec1 = vec_from_slice(&vec0);
         assert_eq!(vec1, vec![22, 44, 66]);
     }
 
     #[test]
-    fn test_vec_from_vec_ref() {
+    fn t004_test_vec_from_vec_ref() {
         let vec0 = vec![22, 44, 66];
         let vec1 = vec_form_vec_ref(&vec0);
         assert_eq!(vec1, vec![22, 44, 66]);
     }
 
     #[test]
-    fn test_vec_mut_inplace() {
+    fn t005_test_vec_mut_inplace() {
         let mut vec0 = vec![22, 44, 66];
         vec_mut_inplace(&mut vec0);
         assert_eq!(vec0, vec![22, 44, 66, 88]);
